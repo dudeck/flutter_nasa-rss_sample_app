@@ -1,0 +1,11 @@
+{
+  "title": "NASA Breaking News",
+  "@title": {
+    "description": "Title in main screen of app"
+  },
+
+  "readMore": "Read more",
+  "@readMore": {
+    "description": "Button read more text"
+  }
+}
