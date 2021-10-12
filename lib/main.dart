@@ -15,14 +15,16 @@ final _getIt = GetIt.instance;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  final sentry = SentryClient(dsn: 'hPASTE_YOUR_DSN_HERE_FOR_SENTRY');
+
+  final _sentry = SentryClient(
+    SentryOptions(
+      dsn: 'PASTE_YOUR_DSN_HERE_FOR_SENTRY',
+    ),
+  );
   registerDI();
 
   FlutterError.onError = (details, {bool forceReport = false}) {
-    sentry.captureException(
-      exception: details.exception,
-      stackTrace: details.stack,
-    );
+    _sentry.captureException(details.exception);
   };
 
   runZonedGuarded(
@@ -30,10 +32,7 @@ void main() async {
       runApp(NASARssApp());
     },
     (error, stackTrace) async {
-      await sentry.captureException(
-        exception: error,
-        stackTrace: stackTrace,
-      );
+      await _sentry.captureException(error);
     },
   );
 }

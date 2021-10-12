@@ -22,7 +22,7 @@ class PDFPrinter {
     );
     final appDocDirectory = await getExternalStorageDirectory();
     final file = File(appDocDirectory.path + '/example.pdf');
-    file.writeAsBytesSync(pdf.save());
+    file.writeAsBytesSync(await pdf.save());
     await OpenFile.open(file.path);
   }
 
@@ -69,9 +69,11 @@ class PDFPrinter {
                   ],
                 ),
                 child: pw.Image(
-                  PdfImage.jpeg(
-                    pdf.document,
-                    image: imageBytes,
+                  pw.ImageProxy(
+                    PdfImage.jpeg(
+                      pdf.document,
+                      image: imageBytes,
+                    ),
                   ),
                 ),
               ),
@@ -131,7 +133,7 @@ class PDFPrinter {
   Future _getImageData(Item item) async {
     var imageBytes;
     if (item.enclosureUrl.contains('.jpg')) {
-      var response = await http.get(item.enclosureUrl);
+      var response = await http.get(Uri.parse(item.enclosureUrl));
       imageBytes = response.bodyBytes;
     }
     return imageBytes;

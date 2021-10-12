@@ -4,7 +4,6 @@ import 'package:flutter_rss/storage/firestore.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:xml/xml.dart' as xml;
-import 'package:xml/xml.dart';
 
 class API {
   static const String URL = 'https://www.nasa.gov/rss/dyn/breaking_news.rss';
@@ -15,7 +14,8 @@ class API {
 
   Future<List<Item>> fetchItems() async {
     try {
-      final response = await httpClient.get(URL);
+      final uri = Uri.parse(URL);
+      final response = await httpClient.get(uri);
       _alice.onHttpResponse(response);
 
       if (response.statusCode == 200) {
@@ -43,7 +43,7 @@ class API {
   }
 
   List<Item> _convertXML(final String data) {
-    final document = XmlDocument.parse(data);
+    final document = xml.XmlDocument.parse(data);
     final items = document.findAllElements('item');
 
     return items.map((f) {

@@ -49,9 +49,9 @@ class _HomePageState extends State<HomePage> {
               _refreshCompleter = Completer();
             }
           },
-          cubit: _rssBloc,
+          bloc: _rssBloc,
           child: BlocBuilder(
-            cubit: _rssBloc,
+            bloc: _rssBloc,
             builder: (BuildContext context, RssState state) {
               if (state is RssFetching) {
                 return CircularProgressIndicator();
