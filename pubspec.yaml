@@ -21,25 +21,25 @@ dependencies:
     sdk: flutter
   flutter_localizations: # Add this line
     sdk: flutter
-  alice: ^0.1.6
-  bloc: ^6.1.0
-  cached_network_image: ^2.5.0
-  cloud_firestore: ^0.14.4
-  firebase_core: ^0.5.3
-  flutter_bloc: ^6.1.1
-  flutter_svg: ^0.19.0
-  get_it: ^5.0.3
-  http: ^0.12.2
-  intl: ^0.16.1
-  open_file: ^3.0.3
-  pdf: ^1.12.0
-  pedantic: ^1.9.2
-  permission_handler: ^5.0.1+1
-  printing: ^3.7.1
-  sentry: ">=3.0.0 <4.0.0"
-  tuple: ^1.0.3
-  url_launcher: ^5.7.10
-  xml: ^4.5.1
+  alice: ^0.2.4
+  bloc: ^7.2.1
+  cached_network_image: ^3.1.0
+  cloud_firestore: ^2.5.3
+  firebase_core: ^1.7.0
+  flutter_bloc: ^7.3.0
+  flutter_svg: ^0.22.0
+  get_it: ^7.2.0
+  http: ^0.13.4
+  intl: ^0.17.0
+  open_file: ^3.2.1
+  pdf: ^3.6.0
+  pedantic: ^1.11.1
+  permission_handler: ^8.2.2
+  printing: ^5.6.0
+  sentry: ^6.0.1
+  tuple: ^2.0.0
+  url_launcher: ^6.0.12
+  xml: ^5.3.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
