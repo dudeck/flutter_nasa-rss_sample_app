@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Item {
-  final String id;
-  final String title;
-  final String link;
-  final String description;
-  final String enclosureUrl;
-  final String pubDate;
+  final String? id;
+  final String? title;
+  final String? link;
+  final String? description;
+  final String? enclosureUrl;
+  final String? pubDate;
 
   Item({
     this.id,
@@ -22,7 +22,7 @@ class Item {
 
   static List<Item> fromMap(List<DocumentSnapshot> list) {
     return list.map((doc) {
-      var data = Map.from(doc.data());
+      var data = Map.from(doc.data() as Map<dynamic, dynamic>);
       final id = data['id'];
       final title = data['title'];
       final link = data['link'];
@@ -42,7 +42,7 @@ class Item {
   }
 
   static Item fromDocument(DocumentSnapshot doc) {
-    var data = Map.from(doc.data());
+    var data = Map.from(doc.data() as Map<dynamic, dynamic>);
     final id = data['id'];
     final title = data['title'];
     final link = data['link'];

@@ -20,8 +20,8 @@ class PDFPrinter {
       context,
       item,
     );
-    final appDocDirectory = await getExternalStorageDirectory();
-    final file = File(appDocDirectory.path + '/example.pdf');
+    final appDocDirectory = await (getExternalStorageDirectory());
+    final file = File(appDocDirectory!.path + '/example.pdf');
     file.writeAsBytesSync(await pdf.save());
     await OpenFile.open(file.path);
   }
@@ -80,7 +80,7 @@ class PDFPrinter {
             pw.Padding(
               padding: const pw.EdgeInsets.all(8.0),
               child: pw.Text(
-                item.title,
+                item.title!,
                 style: pw.TextStyle(
                   font: ttf,
                   fontSize: 16.0,
@@ -96,7 +96,7 @@ class PDFPrinter {
                   mainAxisAlignment: pw.MainAxisAlignment.end,
                   children: [
                     pw.Text(
-                      item.pubDate,
+                      item.pubDate!,
                       textAlign: pw.TextAlign.right,
                       style: pw.TextStyle(
                         font: ttf,
@@ -111,7 +111,7 @@ class PDFPrinter {
               flex: 1,
               child: pw.Padding(
                 padding: const pw.EdgeInsets.all(8.0),
-                child: pw.Text(item.description,
+                child: pw.Text(item.description!,
                     style: pw.TextStyle(
                       font: ttf,
                     )),
@@ -132,8 +132,8 @@ class PDFPrinter {
 
   Future _getImageData(Item item) async {
     var imageBytes;
-    if (item.enclosureUrl.contains('.jpg')) {
-      var response = await http.get(Uri.parse(item.enclosureUrl));
+    if (item.enclosureUrl!.contains('.jpg')) {
+      var response = await http.get(Uri.parse(item.enclosureUrl!));
       imageBytes = response.bodyBytes;
     }
     return imageBytes;

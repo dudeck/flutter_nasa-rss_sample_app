@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_rss/model/item.dart';
 
 class FirestoreApi {
-  Future<void> addItem(Item item) async {
+  Future<Map<dynamic, dynamic>> addItem(Item item) async {
     return FirebaseFirestore.instance
         .collection('items')
         .doc(item.id)

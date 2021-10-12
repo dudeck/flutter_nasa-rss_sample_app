@@ -18,24 +18,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final RssBloc _rssBloc = GetIt.I<RssBloc>();
-  Completer<void> _refreshCompleter;
+  final RssBloc? _rssBloc = GetIt.I<RssBloc>();
+  Completer<void>? _refreshCompleter;
 
   _HomePageState() {
     _refreshCompleter = Completer<void>();
-    _rssBloc.add(RssEvent.fetch);
+    _rssBloc!.add(RssEvent.fetch);
   }
 
   @override
   void dispose() {
-    _rssBloc.add(RssEvent.clear);
-    _rssBloc.close();
+    _rssBloc!.add(RssEvent.clear);
+    _rssBloc!.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final appLocalizations = AppLocalizations.of(context);
+    final appLocalizations = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.lightBlue[800],
@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
               }
 
               if (state is RssLoaded) {
-                if (state.items.isEmpty) {
+                if (state.items!.isEmpty) {
                   return MessageWidget(
                     message: 'No items to show',
                     refresh: refreshData,
@@ -88,8 +88,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> refreshData() {
-    _rssBloc.add(RssEvent.fetch);
-    return _refreshCompleter.future;
+    _rssBloc!.add(RssEvent.fetch);
+    return _refreshCompleter!.future;
   }
 }
 
@@ -99,15 +99,15 @@ class MessageWidget extends StatelessWidget {
     this.refresh,
   });
 
-  final String message;
-  final VoidCallback refresh;
+  final String? message;
+  final VoidCallback? refresh;
 
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: refresh,
+      onRefresh: refresh as Future<void> Function(),
       child: SingleChildScrollView(
-        child: Text(message),
+        child: Text(message!),
       ),
     );
   }
@@ -119,21 +119,21 @@ class NASAItemsContent extends StatelessWidget {
     this.refresh,
   });
 
-  final List<Item> items;
-  final VoidCallback refresh;
+  final List<Item>? items;
+  final VoidCallback? refresh;
 
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: refresh,
+      onRefresh: refresh as Future<void> Function(),
       child: GridView.builder(
-          itemCount: items.length,
+          itemCount: items!.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             childAspectRatio: 0.7,
           ),
           itemBuilder: (BuildContext context, int index) {
-            final item = items[index];
+            final item = items![index];
             return NASAItem(item: item);
           }),
     );
@@ -145,7 +145,7 @@ class NASAItem extends StatelessWidget {
     this.item,
   });
 
-  final Item item;
+  final Item? item;
 
   @override
   Widget build(BuildContext context) {
@@ -168,8 +168,8 @@ class NASAItem extends StatelessWidget {
           },
           child: NasaItemContent(
               data: Tuple2(
-            item.title,
-            item.enclosureUrl,
+            item!.title,
+            item!.enclosureUrl,
           )),
         ),
       ),
@@ -182,12 +182,12 @@ class NasaItemContent extends StatelessWidget {
     this.data,
   });
 
-  final Tuple2<String, String> data;
+  final Tuple2<String?, String?>? data;
 
   @override
   Widget build(BuildContext context) {
-    final title = data.item1;
-    final link = data.item2;
+    final title = data!.item1;
+    final link = data!.item2!;
 
     return Column(
       children: <Widget>[

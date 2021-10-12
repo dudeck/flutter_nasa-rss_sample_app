@@ -7,7 +7,7 @@ import 'package:get_it/get_it.dart';
 class RssBloc extends Bloc<RssEvent, RssState> {
   RssBloc() : super(RssFetching());
 
-  final client = GetIt.instance<API>();
+  final API? client = GetIt.instance<API>();
 
   @override
   Stream<RssState> mapEventToState(RssEvent event) async* {
@@ -15,7 +15,7 @@ class RssBloc extends Bloc<RssEvent, RssState> {
       case RssEvent.fetch:
         try {
           yield RssFetching();
-          final items = await client.fetchItems();
+          final items = await client!.fetchItems();
           yield RssLoaded(items: items);
         } catch (e) {
           if (e is Exception) {

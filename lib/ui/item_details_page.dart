@@ -7,10 +7,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ItemDetailsPage extends StatelessWidget {
-  final Item item;
+  final Item? item;
 
   ItemDetailsPage({
-    @required this.item,
+    required this.item,
   });
 
   @override
@@ -19,7 +19,7 @@ class ItemDetailsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.lightBlue[800],
-        title: Text(item.title),
+        title: Text(item!.title!),
         actions: [
           IconButton(
             color: Colors.red,
@@ -31,7 +31,7 @@ class ItemDetailsPage extends StatelessWidget {
             onPressed: () => {
               pdfPrinter.saveAndOpen(
                 context,
-                item,
+                item!,
               )
             },
           ),
@@ -45,7 +45,7 @@ class ItemDetailsPage extends StatelessWidget {
             onPressed: () => {
               pdfPrinter.printPDF(
                 context,
-                item,
+                item!,
               )
             },
           ),
@@ -63,7 +63,7 @@ class ItemDetailsContent extends StatelessWidget {
     this.item,
   });
 
-  final Item item;
+  final Item? item;
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +83,7 @@ class ItemDetailsContent extends StatelessWidget {
                 ],
               ),
               child: CachedNetworkImage(
-                imageUrl: item.enclosureUrl,
+                imageUrl: item!.enclosureUrl!,
                 placeholder: (context, url) => CircularProgressIndicator(),
                 errorWidget: (context, url, error) => Icon(Icons.error),
               ),
@@ -91,7 +91,7 @@ class ItemDetailsContent extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                item.title,
+                item!.title!,
                 style: TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.w500,
@@ -116,7 +116,7 @@ class ItemDetailsContent extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      item.pubDate,
+                      item!.pubDate!,
                       textAlign: TextAlign.end,
                       style: TextStyle(fontSize: 12.0),
                     ),
@@ -129,7 +129,7 @@ class ItemDetailsContent extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(item.description),
+                  child: Text(item!.description!),
                 ),
               ),
             ),
@@ -140,7 +140,7 @@ class ItemDetailsContent extends StatelessWidget {
                 child: RaisedButton(
                   color: Colors.lightBlue[800],
                   textColor: Colors.white,
-                  child: Text(AppLocalizations.of(context).readMore),
+                  child: Text(AppLocalizations.of(context)!.readMore),
                   onPressed: _launchURL,
                 ),
               ),
@@ -152,8 +152,8 @@ class ItemDetailsContent extends StatelessWidget {
   }
 
   void _launchURL() async {
-    if (await canLaunch(item.link)) {
-      await launch(item.link, statusBarBrightness: Brightness.dark);
+    if (await canLaunch(item!.link!)) {
+      await launch(item!.link!, statusBarBrightness: Brightness.dark);
     } else {
       throw 'Could not launch $item.link';
     }

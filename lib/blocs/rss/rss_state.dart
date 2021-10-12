@@ -10,7 +10,7 @@ class RssFetching extends RssState {
 class RssError extends RssState {
   RssError({this.errorDescription});
 
-  final String errorDescription;
+  final String? errorDescription;
 
   @override
   String toString() => 'RssError';
@@ -19,8 +19,8 @@ class RssError extends RssState {
 class RssLoaded extends RssState {
   RssLoaded({this.items});
 
-  final List<Item> items;
+  final List<Item>? items;
 
   @override
-  String toString() => 'PostLoaded { posts: ${items.length}}';
+  String toString() => 'PostLoaded { posts: ${items!.length}}';
 }

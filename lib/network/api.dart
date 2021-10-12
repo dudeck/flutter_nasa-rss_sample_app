@@ -10,13 +10,13 @@ class API {
 
   final http.Client httpClient = http.Client();
   final FirestoreApi firestoreApi = FirestoreApi();
-  final _alice = GetIt.instance<Alice>();
+  final Alice? _alice = GetIt.instance<Alice>();
 
   Future<List<Item>> fetchItems() async {
     try {
       final uri = Uri.parse(URL);
       final response = await httpClient.get(uri);
-      _alice.onHttpResponse(response);
+      _alice!.onHttpResponse(response);
 
       if (response.statusCode == 200) {
         var itemsList = _convertXML(response.body);
@@ -60,7 +60,7 @@ class API {
     final enclosureUrl = element
         .findElements('enclosure')
         .single
-        .getAttribute('url')
+        .getAttribute('url')!
         .replaceAll('http', 'https');
     final pubDate = element.findElements('pubDate').single.text;
 
