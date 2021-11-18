@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -126,16 +125,18 @@ class NASAItemsContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: refresh as Future<void> Function(),
-      child: GridView.builder(
-          itemCount: items!.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 0.7,
-          ),
-          itemBuilder: (BuildContext context, int index) {
-            final item = items![index];
-            return NASAItem(item: item);
-          }),
+      child: Container(
+        child: GridView.builder(
+            itemCount: items!.length,
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 500,
+              mainAxisExtent: 250,
+            ),
+            itemBuilder: (BuildContext context, int index) {
+              final item = items![index];
+              return NASAItem(item: item);
+            }),
+      ),
     );
   }
 }
@@ -152,6 +153,7 @@ class NASAItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
+        color: Colors.black,
         elevation: 8.0,
         child: InkWell(
           onTap: () {
@@ -189,21 +191,31 @@ class NasaItemContent extends StatelessWidget {
     final title = data!.item1;
     final link = data!.item2!;
 
-    return Column(
-      children: <Widget>[
-        CachedNetworkImage(
-          imageUrl: link,
-          placeholder: (context, url) => CircularProgressIndicator(),
-          errorWidget: (context, url, error) => Icon(Icons.error),
-        ),
+    return Stack(
+      children: [
         Center(
+          child: Image.network(link),
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Item $title',
-              // Comment below 2 lines to get overflow issue.
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
+            padding: const EdgeInsets.fromLTRB(
+              8.0,
+              8.0,
+              8.0,
+              20.0,
+            ),
+            child: Container(
+              color: Colors.black12.withAlpha(100),
+              child: Text(
+                'Item $title',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+                // Comment below 2 lines to get overflow issue.
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ),
         ),
@@ -212,14 +224,14 @@ class NasaItemContent extends StatelessWidget {
   }
 
   /// Ugly code for pedantic lint warnings.
-  // void uglyMethod(String a, String c) {
-  //   String cos = '';
-  //   if (cos == '') {}
-  //   print(cos);
-  //   final list = [];
-  //   if (list != null && list.length > 0) {
-  //     final a = new Item();
-  //   }
-  // }
+// void uglyMethod(String a, String c) {
+//   String cos = '';
+//   if (cos == '') {}
+//   print(cos);
+//   final list = [];
+//   if (list != null && list.length > 0) {
+//     final a = new Item();
+//   }
+// }
 
 }
